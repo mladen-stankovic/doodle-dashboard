@@ -10,11 +10,10 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -35,8 +34,8 @@ public class InitialData extends BaseChangelog {
 
                 //populate polls from initial json file
                 Type listType = new TypeToken<List<Document>>() {}.getType();
-                File initialData = ResourceUtils.getFile("classpath:polls_initial_data.json");
-                List<Document> polls = new Gson().fromJson(new FileReader(initialData), listType);
+                Resource initialData = new ClassPathResource("polls_initial_data.json");
+                List<Document> polls = new Gson().fromJson(new InputStreamReader(initialData.getInputStream(), "UTF-8"), listType);
                 polls.forEach(p -> {
                     p.put("_id", p.get("id"));
                     p.remove("id");
@@ -46,8 +45,8 @@ public class InitialData extends BaseChangelog {
                 //add indexes
                 db.getCollection("polls").createIndex(Indexes.ascending("initiated"));
                 db.getCollection("polls").createIndex(Indexes.ascending("initiator.name"));
-            } catch (FileNotFoundException e) {
-                logger.error("File not found.");
+            } catch (Exception e) {
+                logger.error("Error in populating data: " + e.getLocalizedMessage());
             }
         }
     }
