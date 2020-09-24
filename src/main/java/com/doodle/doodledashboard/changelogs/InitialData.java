@@ -1,9 +1,9 @@
 package com.doodle.doodledashboard.changelogs;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Indexes;
 import org.bson.Document;
@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.*;
-import java.lang.reflect.Type;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -33,13 +33,14 @@ public class InitialData extends BaseChangelog {
                 db.createCollection("polls");
 
                 //populate polls from initial json file
-                Type listType = new TypeToken<List<Document>>() {}.getType();
+                ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 Resource initialData = new ClassPathResource("polls_initial_data.json");
-                List<Document> polls = new Gson().fromJson(new InputStreamReader(initialData.getInputStream(), "UTF-8"), listType);
+
+                List<LinkedHashMap> polls = objectMapper.readValue(new InputStreamReader(initialData.getInputStream(), "UTF-8"), List.class);
                 polls.forEach(p -> {
                     p.put("_id", p.get("id"));
                     p.remove("id");
-                    db.getCollection("polls").insertOne(p);
+                    db.getCollection("polls").insertOne(new Document(p));
                 });
 
                 //add indexes
