@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.UUID;
 
+import static com.doodle.doodledashboard.common.DataConstants.POLLS_COLLECTION;
 import static org.mockito.Mockito.*;
 
 /**
@@ -33,7 +34,7 @@ public class PollServiceUnitTests {
     @Mock
     private MongoTemplate mongoTemplate;
 
-    private void givenUserHasPolls() {
+    private Query givenUserHasPolls() {
         Query query = new Query();
         query.addCriteria(Criteria.where("initiator.email").is(DataConstants.TEST_INITIATOR_1));
 
@@ -46,9 +47,11 @@ public class PollServiceUnitTests {
             documents.add(document);
         }
         when(mongoTemplate.find(query, Document.class, DataConstants.POLLS_COLLECTION)).thenReturn(documents);
+
+        return query;
     }
 
-    private void givenSearchByTitleHasResults() {
+    private Query givenSearchByTitleHasResults() {
         Query query = new Query();
         query.addCriteria(Criteria.where("title").regex(".*" + DataConstants.SEARCH_TERM + ".*"));
 
@@ -59,11 +62,13 @@ public class PollServiceUnitTests {
             documents.add(document);
         }
         when(mongoTemplate.find(query, Document.class, DataConstants.POLLS_COLLECTION)).thenReturn(documents);
+
+        return query;
     }
 
     @Test
     public void givenUserHasPolls_whenSearchingForPolls_checkResponse() {
-        givenUserHasPolls();
+        Query query = givenUserHasPolls();
 
         List<Document> documents = pollService.findByInitiatorEmail(DataConstants.TEST_INITIATOR_1);
         Assertions.assertNotNull(documents);
@@ -72,11 +77,13 @@ public class PollServiceUnitTests {
             Assertions.assertNotNull(d.get("initiator"));
             Assertions.assertEquals(((Document)d.get("initiator")).get("email"), DataConstants.TEST_INITIATOR_1);
         });
+
+        verify(mongoTemplate, times(1)).find(query, Document.class, POLLS_COLLECTION);
     }
 
     @Test
     public void givenSearchByTitleHasResults_whenSearchingForPolls_checkResponse() {
-        givenSearchByTitleHasResults();
+        Query query = givenSearchByTitleHasResults();
 
         List<Document> documents = pollService.searchByTitle(DataConstants.SEARCH_TERM);
         Assertions.assertNotNull(documents);
@@ -85,5 +92,7 @@ public class PollServiceUnitTests {
             Assertions.assertNotNull(d.get("title"));
             Assertions.assertTrue(d.getString("title").contains(DataConstants.SEARCH_TERM));
         });
+
+        verify(mongoTemplate, times(1)).find(query, Document.class, POLLS_COLLECTION);
     }
 }
