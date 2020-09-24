@@ -17,9 +17,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.mockito.Mockito.*;
 
 /**
@@ -46,7 +45,20 @@ public class PollServiceUnitTests {
             document.put("initiator", initiator);
             documents.add(document);
         }
-        when(mongoTemplate.find(query, Document.class,DataConstants.POLLS_COLLECTION)).thenReturn(documents);
+        when(mongoTemplate.find(query, Document.class, DataConstants.POLLS_COLLECTION)).thenReturn(documents);
+    }
+
+    private void givenSearchByTitleHasResults() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("title").regex(".*" + DataConstants.SEARCH_TERM + ".*"));
+
+        List<Document> documents = Lists.newArrayList();
+        for (int i = 0; i < 3; i++) {
+            Document document = new Document();
+            document.put("title", UUID.randomUUID().toString() + DataConstants.SEARCH_TERM + UUID.randomUUID().toString());
+            documents.add(document);
+        }
+        when(mongoTemplate.find(query, Document.class, DataConstants.POLLS_COLLECTION)).thenReturn(documents);
     }
 
     @Test
@@ -56,6 +68,22 @@ public class PollServiceUnitTests {
         List<Document> documents = pollService.findByInitiatorEmail(DataConstants.TEST_INITIATOR_1);
         Assertions.assertNotNull(documents);
         Assertions.assertNotEquals(documents.size(), 0);
-        documents.forEach(d -> hasProperty("initiator", hasProperty("email", equalTo(DataConstants.TEST_INITIATOR_1))));
+        documents.forEach(d -> {
+            Assertions.assertNotNull(d.get("initiator"));
+            Assertions.assertEquals(((Document)d.get("initiator")).get("email"), DataConstants.TEST_INITIATOR_1);
+        });
+    }
+
+    @Test
+    public void givenSearchByTitleHasResults_whenSearchingForPolls_checkResponse() {
+        givenSearchByTitleHasResults();
+
+        List<Document> documents = pollService.searchByTitle(DataConstants.SEARCH_TERM);
+        Assertions.assertNotNull(documents);
+        Assertions.assertNotEquals(documents.size(), 0);
+        documents.forEach(d -> {
+            Assertions.assertNotNull(d.get("title"));
+            Assertions.assertTrue(d.getString("title").contains(DataConstants.SEARCH_TERM));
+        });
     }
 }
