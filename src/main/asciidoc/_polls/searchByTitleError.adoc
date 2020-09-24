@@ -1,0 +1,15 @@
+[[searchByTitle_error]]
+==== Error call
+When making a bad request to this API endpoint, the following body can be expected.
+
+[[searchByTitle_error_request]]
+===== Request
+include::{snippets}/searchByTitleError/http-request.adoc[]
+
+[[searchByTitle_error_response]]
+===== Response
+include::{snippets}/searchByTitleError/http-response.adoc[]
+
+[[searchByTitle_error_curl]]
+===== cURL
+include::{snippets}/searchByTitleError/curl-request.adoc[]

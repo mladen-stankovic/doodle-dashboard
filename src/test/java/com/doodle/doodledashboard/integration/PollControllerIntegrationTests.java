@@ -76,4 +76,11 @@ public class PollControllerIntegrationTests {
                 .andReturn();
     }
 
+    @Test
+    public void searchByTitleErrorAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.TITLE + "/"))
+                .andExpect(status().isNotFound())
+                .andDo(document("searchByTitleError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
+    }
 }

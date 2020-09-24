@@ -10,3 +10,4 @@ include::findByInitiatorEmailError.adoc[]
 Endpoint that returns all polls that contains specified title.
 
 include::searchByTitleSuccess.adoc[]
+include::searchByTitleError.adoc[]
