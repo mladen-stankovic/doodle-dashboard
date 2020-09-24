@@ -43,6 +43,15 @@ public class PollService {
         return getDocuments(Criteria.where("title").regex(".*" + title + ".*"));
     }
 
+    /**
+     * Find all polls created after provided date
+     *
+     * @param date provided date
+     * @return List of {@link Document} objects in polls collection created after provided date
+     */
+    public List<Document> findCreatedAfterDate(Long date) {
+        return getDocuments(Criteria.where("initiated").gt(date));
+    }
 
     private List<Document> getDocuments(Criteria criteria) {
         Query query = new Query(criteria);

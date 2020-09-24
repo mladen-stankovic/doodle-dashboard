@@ -10,4 +10,5 @@ public class UriMappingConstants {
 
     public static final String INITIATOR = "/initiator";
     public static final String TITLE = "/title";
+    public static final String CREATED_AFTER = "/created-after";
 }
