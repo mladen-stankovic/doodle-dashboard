@@ -1,0 +1,15 @@
+[[findByInitiatorEmail_error]]
+==== Error call
+When making a bad request to this API endpoint, the following body can be expected.
+
+[[findByInitiatorEmail_error_request]]
+===== Request
+include::{snippets}/findByInitiatorEmailError/http-request.adoc[]
+
+[[findByInitiatorEmail_error_response]]
+===== Response
+include::{snippets}/findByInitiatorEmailError/http-response.adoc[]
+
+[[findByInitiatorEmail_error_curl]]
+===== cURL
+include::{snippets}/findByInitiatorEmailError/curl-request.adoc[]

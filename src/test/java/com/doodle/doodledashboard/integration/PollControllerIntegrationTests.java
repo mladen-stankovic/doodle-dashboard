@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.ActiveProfiles;
@@ -52,7 +53,19 @@ public class PollControllerIntegrationTests {
             .andExpect(jsonPath("$").isNotEmpty())
             .andExpect(jsonPath("$.[*].initiator", Matchers.everyItem(is(not(empty())))))
             .andExpect(jsonPath("$.[*].initiator.email", Matchers.everyItem(is(DataConstants.TEST_INITIATOR_2))))
-            .andDo(document("findByInitiatorEmail", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+            .andDo(document("findByInitiatorEmailSuccess", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
             .andReturn();
+    }
+
+    @Test
+    public void findByInitiatorEmailErrorAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS +  "/" + "badEmailAddress"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
+                .andExpect(jsonPath("$.error", is("Constraint violation error")))
+                .andExpect(jsonPath("$.message", is("findByInitiatorEmail.initiatorEmail: must be a well-formed email address")))
+                .andDo(document("findByInitiatorEmailError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
     }
 }
