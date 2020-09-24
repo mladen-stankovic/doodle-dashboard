@@ -1,0 +1,15 @@
+[[searchByTitle_success]]
+==== Successful call
+When making a successful call to this API endpoint, the following body can be expected.
+
+[[searchByTitle_success_request]]
+===== Request
+include::{snippets}/searchByTitleSuccess/http-request.adoc[]
+
+[[searchByTitle_success_response]]
+===== Response
+include::{snippets}/searchByTitleSuccess/http-response.adoc[]
+
+[[searchByTitle_success_curl]]
+===== cURL
+include::{snippets}/searchByTitleSuccess/curl-request.adoc[]

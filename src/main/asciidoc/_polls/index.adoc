@@ -1,6 +1,12 @@
 [[findByInitiatorEmail]]
-=== Find Polls By Initiator's Email
-Endpoint that returns all polls for specified initiator's email.
+=== Find Polls By Initiators Email
+Endpoint that returns all polls for specified initiators email.
 
 include::findByInitiatorEmailSuccess.adoc[]
 include::findByInitiatorEmailError.adoc[]
+
+[[searchByTitle]]
+=== Search polls by its title
+Endpoint that returns all polls that contains specified title.
+
+include::searchByTitleSuccess.adoc[]

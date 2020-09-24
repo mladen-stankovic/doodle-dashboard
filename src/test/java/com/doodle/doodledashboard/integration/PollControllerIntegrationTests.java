@@ -2,12 +2,10 @@ package com.doodle.doodledashboard.integration;
 
 import com.doodle.doodledashboard.common.DataConstants;
 import com.doodle.doodledashboard.common.UriMappingConstants;
-import com.doodle.doodledashboard.service.PollService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -35,9 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PollControllerIntegrationTests {
     private MockMvc mockMvc;
 
-    @Autowired
-    private PollService pollService;
-
     @BeforeEach
     public void setup(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
@@ -47,7 +42,7 @@ public class PollControllerIntegrationTests {
 
     @Test
     public void findByInitiatorEmailSuccessAndDocumentApiTest() throws Exception {
-        mockMvc.perform(get(UriMappingConstants.POLLS +  "/" + DataConstants.TEST_INITIATOR_2))
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.INITIATOR + "/" + DataConstants.TEST_INITIATOR_2))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isNotEmpty())
@@ -59,7 +54,7 @@ public class PollControllerIntegrationTests {
 
     @Test
     public void findByInitiatorEmailErrorAndDocumentApiTest() throws Exception {
-        mockMvc.perform(get(UriMappingConstants.POLLS +  "/" + "badEmailAddress"))
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.INITIATOR + "/badEmailAddress"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
@@ -68,4 +63,17 @@ public class PollControllerIntegrationTests {
                 .andDo(document("findByInitiatorEmailError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .andReturn();
     }
+
+    @Test
+    public void searchByTitleSuccessAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.TITLE + "/" + DataConstants.SEARCH_TERM))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.[*].title", Matchers.everyItem(is(not(empty())))))
+                .andExpect(jsonPath("$.[*].title", Matchers.everyItem(containsString(DataConstants.SEARCH_TERM))))
+                .andDo(document("searchByTitleSuccess", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
+    }
+
 }
