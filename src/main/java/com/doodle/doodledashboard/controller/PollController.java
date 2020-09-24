@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Created by mladen.stankovic on 2020-09-24.
@@ -24,8 +25,13 @@ public class PollController extends BaseController {
         this.pollService = pollService;
     }
 
-    @GetMapping("/{initiatorEmail}")
-    public ResponseEntity<?> findByInitiatorEmail(@PathVariable("initiatorEmail") @Email String initiatorEmail) {
+    @GetMapping(UriMappingConstants.INITIATOR + "/{initiatorEmail}")
+    public ResponseEntity<?> findByInitiatorEmail(@PathVariable("initiatorEmail") @NotEmpty @Email String initiatorEmail) {
         return ResponseEntity.ok(pollService.findByInitiatorEmail(initiatorEmail));
+    }
+
+    @GetMapping(UriMappingConstants.TITLE + "/{title}")
+    public ResponseEntity<?> searchByTitle(@PathVariable("title") @NotEmpty String title) {
+        return ResponseEntity.ok(pollService.searchByTitle(title));
     }
 }

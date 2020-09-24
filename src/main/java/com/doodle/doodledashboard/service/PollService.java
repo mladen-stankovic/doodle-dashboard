@@ -34,4 +34,16 @@ public class PollService {
         query.addCriteria(Criteria.where("initiator.email").is(initiatorEmail));
         return mongoTemplate.find(query, Document.class, POLLS_COLLECTION);
     }
+
+    /**
+     * Search all {@link Document} objects in polls collection for provided title
+     *
+     * @param title provided title
+     * @return List of {@link Document} objects in polls collection for provided title
+     */
+    public List<Document> searchByTitle(String title) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("title").regex(".*" + title + ".*"));
+        return mongoTemplate.find(query, Document.class, POLLS_COLLECTION);
+    }
 }

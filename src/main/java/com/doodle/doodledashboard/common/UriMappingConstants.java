@@ -6,6 +6,8 @@ package com.doodle.doodledashboard.common;
  */
 public class UriMappingConstants {
     public static final String REST_API_BASE = "/rest/api";
-
     public static final String POLLS = REST_API_BASE + "/polls";
+
+    public static final String INITIATOR = "/initiator";
+    public static final String TITLE = "/title";
 }

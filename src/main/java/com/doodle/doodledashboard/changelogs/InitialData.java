@@ -46,8 +46,9 @@ public class InitialData extends BaseChangelog {
                 });
 
                 //add indexes
-                db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("initiated"));
                 db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("initiator.email"));
+                db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("title"));
+                db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("initiated"));
             } catch (Exception e) {
                 logger.error("Error in populating data: " + e.getLocalizedMessage());
             }
