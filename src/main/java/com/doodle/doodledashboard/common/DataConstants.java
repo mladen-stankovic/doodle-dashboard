@@ -5,4 +5,5 @@ package com.doodle.doodledashboard.common;
  */
 public class DataConstants {
     public static final String POLLS_COLLECTION = "polls";
+    public static final String TEST_INITIATOR = "mh+sample@doodle.com";
 }
