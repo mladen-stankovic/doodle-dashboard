@@ -24,26 +24,28 @@ public class PollService {
     }
 
     /**
-     * Find all {@link Document} objects in polls collection for provided initiator email
+     * Find polls for provided initiator email
      *
      * @param initiatorEmail provided initiator email
      * @return List of {@link Document} objects in polls collection for provided initiator email
      */
     public List<Document> findByInitiatorEmail(String initiatorEmail) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("initiator.email").is(initiatorEmail));
-        return mongoTemplate.find(query, Document.class, POLLS_COLLECTION);
+        return getDocuments(Criteria.where("initiator.email").is(initiatorEmail));
     }
 
     /**
-     * Search all {@link Document} objects in polls collection for provided title
+     * Search all polls collection for provided title
      *
      * @param title provided title
      * @return List of {@link Document} objects in polls collection for provided title
      */
     public List<Document> searchByTitle(String title) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("title").regex(".*" + title + ".*"));
+        return getDocuments(Criteria.where("title").regex(".*" + title + ".*"));
+    }
+
+
+    private List<Document> getDocuments(Criteria criteria) {
+        Query query = new Query(criteria);
         return mongoTemplate.find(query, Document.class, POLLS_COLLECTION);
     }
 }
