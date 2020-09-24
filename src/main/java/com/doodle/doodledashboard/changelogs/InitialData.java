@@ -17,6 +17,8 @@ import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static com.doodle.doodledashboard.common.DataConstants.POLLS_COLLECTION;
+
 /**
  * Created by mladen.stankovic on 2020-09-23.
  */
@@ -30,7 +32,7 @@ public class InitialData extends BaseChangelog {
         if (devOrTestProfile(environment)) {
             try {
                 //create collection polls
-                db.createCollection("polls");
+                db.createCollection(POLLS_COLLECTION);
 
                 //populate polls from initial json file
                 ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -40,12 +42,12 @@ public class InitialData extends BaseChangelog {
                 polls.forEach(p -> {
                     p.put("_id", p.get("id"));
                     p.remove("id");
-                    db.getCollection("polls").insertOne(new Document(p));
+                    db.getCollection(POLLS_COLLECTION).insertOne(new Document(p));
                 });
 
                 //add indexes
-                db.getCollection("polls").createIndex(Indexes.ascending("initiated"));
-                db.getCollection("polls").createIndex(Indexes.ascending("initiator.name"));
+                db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("initiated"));
+                db.getCollection(POLLS_COLLECTION).createIndex(Indexes.ascending("initiator.email"));
             } catch (Exception e) {
                 logger.error("Error in populating data: " + e.getLocalizedMessage());
             }
