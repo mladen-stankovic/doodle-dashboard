@@ -36,13 +36,13 @@ public class PollServiceUnitTests {
 
     private void givenUserHasPolls() {
         Query query = new Query();
-        query.addCriteria(Criteria.where("initiator.email").is(DataConstants.TEST_INITIATOR));
+        query.addCriteria(Criteria.where("initiator.email").is(DataConstants.TEST_INITIATOR_1));
 
         List<Document> documents = Lists.newArrayList();
         for (int i = 0; i < 3; i++) {
             Document document = new Document();
             Document initiator = new Document();
-            initiator.put("email", DataConstants.TEST_INITIATOR);
+            initiator.put("email", DataConstants.TEST_INITIATOR_1);
             document.put("initiator", initiator);
             documents.add(document);
         }
@@ -53,9 +53,9 @@ public class PollServiceUnitTests {
     public void givenUserHasPolls_whenSearchingForPolls_checkResponse() {
         givenUserHasPolls();
 
-        List<Document> documents = pollService.findByInitiatorEmail(DataConstants.TEST_INITIATOR);
+        List<Document> documents = pollService.findByInitiatorEmail(DataConstants.TEST_INITIATOR_1);
         Assertions.assertNotNull(documents);
         Assertions.assertNotEquals(documents.size(), 0);
-        documents.forEach(d -> hasProperty("initiator", hasProperty("email", equalTo(DataConstants.TEST_INITIATOR))));
+        documents.forEach(d -> hasProperty("initiator", hasProperty("email", equalTo(DataConstants.TEST_INITIATOR_1))));
     }
 }

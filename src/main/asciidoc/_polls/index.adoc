@@ -1,0 +1,5 @@
+[[findByInitiatorEmail]]
+=== Find Polls By Initiator's Email
+Endpoint that returns all polls for specified initiator's email.
+
+include::findByInitiatorEmail.adoc[]
