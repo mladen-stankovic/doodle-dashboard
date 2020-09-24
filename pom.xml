@@ -26,7 +26,6 @@
         <spring-restdocs-mockmvc.version>2.0.4.RELEASE</spring-restdocs-mockmvc.version>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <jackson-databind.version>2.11.2</jackson-databind.version>
         <asciidoctor-maven-plugin.version>2.0.0</asciidoctor-maven-plugin.version>
         <asciidoctor-skip-doc>false</asciidoctor-skip-doc>
     </properties>
@@ -124,13 +123,6 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb.driver-sync.version}</version>
-        </dependency>
-
-        <!-- Jackson library for deserializing JSON objects -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind.version}</version>
         </dependency>
 
     </dependencies>
