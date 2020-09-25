@@ -95,4 +95,28 @@ public class PollControllerIntegrationTests {
                 .andDo(document("findCreatedAfterDateSuccess", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .andReturn();
     }
+
+    @Test
+    public void findCreatedAfterDateInvalidDateErrorAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.CREATED_AFTER + "/notDate"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
+                .andExpect(jsonPath("$.error", is("Constraint violation error")))
+                .andExpect(jsonPath("$.message", is("Please provide valid date.")))
+                .andDo(document("findCreatedAfterDateNotDateError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
+    }
+
+    @Test
+    public void findCreatedAfterDateFutureDateErrorAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.CREATED_AFTER + "/" + DataConstants.TEST_DATE_IN_THE_FUTURE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
+                .andExpect(jsonPath("$.error", is("Constraint violation error")))
+                .andExpect(jsonPath("$.message", is("Please provide date in the past.")))
+                .andDo(document("findCreatedAfterDateFutureDateError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
+    }
 }

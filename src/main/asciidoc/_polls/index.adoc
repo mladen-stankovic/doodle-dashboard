@@ -17,3 +17,5 @@ include::searchByTitleError.adoc[]
 Endpoint that returns all polls created after a specified date.
 
 include::findCreatedAfterDateSuccess.adoc[]
+include::findCreatedAfterDateNotDateError.adoc[]
+include::findCreatedAfterDateFutureDateError.adoc[]

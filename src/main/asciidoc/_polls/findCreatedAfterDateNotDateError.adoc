@@ -1,0 +1,15 @@
+[[findCreatedAfterDate_error_1]]
+==== Error call with invalid date
+When making a bad request to this API endpoint, the following body can be expected.
+
+[[findCreatedAfterDate_error_1_request]]
+===== Request
+include::{snippets}/findCreatedAfterDateNotDateError/http-request.adoc[]
+
+[[findCreatedAfterDate_error_1_response]]
+===== Response
+include::{snippets}/findCreatedAfterDateNotDateError/http-response.adoc[]
+
+[[findCreatedAfterDate_error_1_curl]]
+===== cURL
+include::{snippets}/findCreatedAfterDateNotDateError/curl-request.adoc[]

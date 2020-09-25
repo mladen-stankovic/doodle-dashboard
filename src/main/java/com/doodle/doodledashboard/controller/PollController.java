@@ -21,7 +21,7 @@ import java.util.Date;
 @RestController
 @Validated
 @RequestMapping(UriMappingConstants.POLLS)
-public class PollController extends BaseController {
+public class PollController {
     private final PollService pollService;
 
     @Autowired
@@ -59,7 +59,7 @@ public class PollController extends BaseController {
         if (errorMessage != null) {
             ErrorResponse errorResponse = new ErrorResponse(request, HttpStatus.BAD_REQUEST.value(),
                     "Constraint violation error", errorMessage);
-            return badRequest(errorResponse);
+            return ResponseEntity.badRequest().body(errorResponse);
         }
 
         return ResponseEntity.ok(pollService.findCreatedAfterDate(unixTimestamp));
