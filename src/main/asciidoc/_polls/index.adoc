@@ -1,6 +1,7 @@
 [[findByInitiatorEmail]]
 === Find polls by initiators email
 Endpoint that returns all polls for specified initiators email.
+Path format: /rest/api/polls/initiator/{initiatorEmail}
 
 include::findByInitiatorEmailSuccess.adoc[]
 include::findByInitiatorEmailError.adoc[]
@@ -8,6 +9,7 @@ include::findByInitiatorEmailError.adoc[]
 [[searchByTitle]]
 === Search polls by its title
 Endpoint that returns all polls that contains specified title.
+Path format: /rest/api/polls/title/{searchTerm}
 
 include::searchByTitleSuccess.adoc[]
 include::searchByTitleError.adoc[]
@@ -15,6 +17,7 @@ include::searchByTitleError.adoc[]
 [[findCreatedAfterDate]]
 === Find polls created after a specified date
 Endpoint that returns all polls created after a specified date.
+Path format: /rest/api/polls/created-after/{unixTimestampInMilliseconds}
 
 include::findCreatedAfterDateSuccess.adoc[]
 include::findCreatedAfterDateNotDateError.adoc[]

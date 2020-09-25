@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "06208c1c-c9d2-48e1-83fa-0bc8f1e3bd7b",
+		"name": "DoodleDashboard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "findByInitiatorEmailBadRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/initiator/mh+sample",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"initiator",
+						"mh+sample"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByInitiatorEmailSuccess",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/initiator/test+sample@doodle.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"initiator",
+						"test+sample@doodle.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchByTitleSuccess",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/title/you",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"title",
+						"you"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchByTitleBadRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/title/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"title",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findCreatedAfterDateSuccess",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/created-after/1485467118000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"created-after",
+						"1485467118000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findCreatedAfterDateBadRequestNotDate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/created-after/notDate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"created-after",
+						"notDate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findCreatedAfterDateBadRequestDateInFuture",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/api/polls/created-after/2232135918000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"polls",
+						"created-after",
+						"2232135918000"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
