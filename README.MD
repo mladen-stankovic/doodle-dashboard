@@ -55,7 +55,7 @@ API Documentation is automatically generated upon package phase and can be found
 Latest copy of API documentation and Postman collection containing all API calls can be found in **/distribution**
 
 ## Testing
-To execute tests (both unit and integration) against test data, once you have Maven installed, navigate to project root and execute
+To execute tests (both unit and integration) against test data, once you have Maven and Java installed, navigate to project root and execute
 ```
 mvn clean install
 ```
