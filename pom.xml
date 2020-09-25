@@ -102,7 +102,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mongock -->a
+        <!-- Mongock -->
         <dependency>
             <groupId>com.github.cloudyrock.mongock</groupId>
             <artifactId>mongock-bom</artifactId>
