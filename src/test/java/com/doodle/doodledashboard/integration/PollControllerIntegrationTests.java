@@ -83,4 +83,16 @@ public class PollControllerIntegrationTests {
                 .andDo(document("searchByTitleError", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .andReturn();
     }
+
+    @Test
+    public void findCreatedAfterDateSuccessAndDocumentApiTest() throws Exception {
+        mockMvc.perform(get(UriMappingConstants.POLLS + UriMappingConstants.CREATED_AFTER + "/" + DataConstants.TEST_DATE_IN_THE_PAST))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.[*].initiated", Matchers.everyItem(is(not(empty())))))
+                .andExpect(jsonPath("$.[*].initiated", Matchers.everyItem(greaterThan(Long.parseLong(DataConstants.TEST_DATE_IN_THE_PAST)))))
+                .andDo(document("findCreatedAfterDateSuccess", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .andReturn();
+    }
 }

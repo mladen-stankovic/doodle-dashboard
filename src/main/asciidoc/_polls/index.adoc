@@ -1,5 +1,5 @@
 [[findByInitiatorEmail]]
-=== Find Polls By Initiators Email
+=== Find polls by initiators email
 Endpoint that returns all polls for specified initiators email.
 
 include::findByInitiatorEmailSuccess.adoc[]
@@ -11,3 +11,9 @@ Endpoint that returns all polls that contains specified title.
 
 include::searchByTitleSuccess.adoc[]
 include::searchByTitleError.adoc[]
+
+[[findCreatedAfterDate]]
+=== Find polls created after a specified date
+Endpoint that returns all polls created after a specified date.
+
+include::findCreatedAfterDateSuccess.adoc[]

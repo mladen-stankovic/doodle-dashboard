@@ -1,0 +1,15 @@
+[[findCreatedAfterDate_success]]
+==== Successful call
+When making a successful call to this API endpoint, the following body can be expected.
+
+[[findCreatedAfterDate_success_request]]
+===== Request
+include::{snippets}/findCreatedAfterDateSuccess/http-request.adoc[]
+
+[[findCreatedAfterDate_success_response]]
+===== Response
+include::{snippets}/findCreatedAfterDateSuccess/http-response.adoc[]
+
+[[findCreatedAfterDate_success_curl]]
+===== cURL
+include::{snippets}/findCreatedAfterDateSuccess/curl-request.adoc[]
